@@ -1,0 +1,13 @@
+{
+  "type": "record",
+  "name": "OrderEvent",
+  "namespace": "com.example.orders",
+  "fields": [
+    {"name": "order_id", "type": "string"},
+    {"name": "status", "type": "string"},
+    {"name": "amount", "type": "double"},
+    {"name": "customer_id", "type": "string"},
+    {"name": "ts", "type": "double"},
+    {"name": "currency", "type": "string", "default": "USD"}
+  ]
+}
