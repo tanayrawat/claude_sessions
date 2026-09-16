@@ -14,7 +14,7 @@
 
 ```bash
 # from kafka-learn/, with the stack already up (docker compose up -d)
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.v1 --partitions 1 --replication-factor 1
 
 # terminal A

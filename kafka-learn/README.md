@@ -64,6 +64,24 @@ Stage 4 is the one worth slowing down for — it's the single most common Kafka 
 and the only way to actually understand it is to watch a crash produce a duplicate, then watch
 a transaction refuse to let that happen.
 
+## Two addresses for one broker
+
+This cluster exposes the *same* broker over two listeners, and which one you use depends on
+where the calling code runs:
+
+| Caller | Address | Why |
+|---|---|---|
+| Python scripts in this repo (run on your host) | `localhost:19092` | reaches the broker through Docker's published port mapping |
+| `docker exec kafka kafka-topics ...` / `kafka-console-consumer ...` (run *inside* the container) | `kafka:29092` | the container's own internal Docker-network address |
+
+Mixing these up is the single most common way this stack breaks: a client connects fine on its
+*first* request (the bootstrap), then the broker's metadata response redirects it to that
+listener's *advertised address* for every subsequent request — and if that address doesn't
+exist from where the client is actually running, every retry after that first request hangs
+with `Connection ... could not be established`, forever, with no clearer error than that. Every
+`docker exec` command in this repo's Makefile and READMEs already uses `kafka:29092` for exactly
+this reason — if you write a new one yourself, use `kafka:29092`, not `localhost:9092`.
+
 ## Troubleshooting
 
 - **Port already in use** — the broker publishes on host port **19092** (not the usual 9092)
@@ -72,6 +90,9 @@ a transaction refuse to let that happen.
   change 19092, remember `KAFKA_ADVERTISED_LISTENERS`' `PLAINTEXT_HOST` value has to match it
   exactly (that's what tells host-side clients where to reconnect), and every script's
   `bootstrap.servers` needs to match too.
+- **`docker exec` commands hang with repeated `Connection ... could not be established`** — see
+  "Two addresses for one broker" above; you're almost certainly using `localhost:9092` from
+  inside the container instead of `kafka:29092`.
 - **Connection refused right after `make up`** — the broker takes a few seconds to finish
   startup; `make up` waits for its healthcheck, but if you skipped straight to a script, just
   retry, or check `make logs`.
@@ -96,5 +117,5 @@ how most data engineering roles actually use this:
 - **Security** — SASL/SCRAM or mTLS between clients and brokers, and topic-level ACLs; this repo
   runs everything `PLAINTEXT` with no auth because it's local and disposable.
 - **Monitoring consumer lag** — `docker exec kafka kafka-consumer-groups --bootstrap-server
-  localhost:9092 --describe --group order-processors` shows you the `LAG` column live; in
+  kafka:29092 --describe --group order-processors` shows you the `LAG` column live; in
   production that number, alerted on, is usually your first signal something downstream is stuck.

@@ -12,7 +12,7 @@
 ## Run it
 
 ```bash
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.groups --partitions 4 --replication-factor 1
 
 python 03_consumer_groups/producer.py             # terminal A -- leave running

@@ -5,7 +5,7 @@ Two independent, small patterns that show up in almost every real Kafka consumer
 ## Part A — Windowed aggregation
 
 ```bash
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic revenue.windowed --partitions 1 --replication-factor 1
 
 # reuses orders.delivery from Stage 4 -- start that stage's producer if it isn't running
@@ -23,9 +23,9 @@ window still gets counted correctly instead of silently missed.
 ## Part B — Dead-letter queue
 
 ```bash
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.dirty --partitions 1 --replication-factor 1
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.dirty.dlq --partitions 1 --replication-factor 1
 
 python 06_stream_processing_dlq/producer_with_poison_messages.py   # terminal A
@@ -39,7 +39,7 @@ partition, and every good message on either side of a bad one still gets process
 what landed in the DLQ, headers and all:
 
 ```bash
-docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 \
+docker exec kafka kafka-console-consumer --bootstrap-server kafka:29092 \
   --topic orders.dirty.dlq --from-beginning --property print.headers=true --timeout-ms 5000
 ```
 

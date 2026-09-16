@@ -11,7 +11,7 @@ throughput and useless for ordering.
 ## Run it
 
 ```bash
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.keyed --partitions 3 --replication-factor 1
 
 python 02_keys_and_partitions/consumer.py     # terminal A
@@ -31,8 +31,8 @@ Delete the topic and recreate it with **6** partitions instead of 3, then run th
 against the same `order-XXXX` ids used before.
 
 ```bash
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 --delete --topic orders.keyed
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 --delete --topic orders.keyed
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.keyed --partitions 6 --replication-factor 1
 ```
 

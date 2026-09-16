@@ -16,11 +16,11 @@ they memorize the terms without ever watching them happen. This stage makes all 
 ## Run it
 
 ```bash
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.delivery --partitions 3 --replication-factor 1
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.idempotent --partitions 3 --replication-factor 1
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic revenue.v1 --partitions 3 --replication-factor 1
 
 python 04_delivery_semantics/producer.py   # leave running in its own terminal
@@ -39,11 +39,11 @@ what to watch for at the crash boundary in each mode.
 
 ```bash
 python 04_delivery_semantics/idempotent_producer.py
-docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 \
+docker exec kafka kafka-console-consumer --bootstrap-server kafka:29092 \
   --topic orders.idempotent --from-beginning --timeout-ms 3000 2>/dev/null | wc -l   # note the count
 
 python 04_delivery_semantics/idempotent_producer.py --duplicate-bug
-docker exec kafka kafka-console-consumer --bootstrap-server localhost:9092 \
+docker exec kafka kafka-console-consumer --bootstrap-server kafka:29092 \
   --topic orders.idempotent --from-beginning --timeout-ms 3000 2>/dev/null | wc -l   # up by 2x this run's messages
 ```
 `enable.idempotence` stops the *client library* from double-sending during its own retries

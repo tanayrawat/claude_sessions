@@ -16,7 +16,7 @@
 ## Run it
 
 ```bash
-docker exec kafka kafka-topics --bootstrap-server localhost:9092 \
+docker exec kafka kafka-topics --bootstrap-server kafka:29092 \
   --create --topic orders.avro --partitions 3 --replication-factor 1
 
 python 05_schema_registry_avro/consumer_avro.py                          # terminal A, leave running
