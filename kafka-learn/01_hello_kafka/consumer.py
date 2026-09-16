@@ -9,7 +9,7 @@ TOPIC = "orders.v1"
 def main():
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": "hello-kafka-readers",
             "auto.offset.reset": "earliest",
         }

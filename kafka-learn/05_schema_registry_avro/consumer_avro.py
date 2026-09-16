@@ -16,7 +16,7 @@ def main():
 
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": "avro-readers",
             "auto.offset.reset": "earliest",
         }

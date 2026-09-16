@@ -29,7 +29,7 @@ def main():
 
     schema_registry = SchemaRegistryClient({"url": "http://localhost:8081"})
     avro_serializer = AvroSerializer(schema_registry, schema_str, lambda obj, ctx: obj)
-    producer = Producer({"bootstrap.servers": "localhost:9092"})
+    producer = Producer({"bootstrap.servers": "localhost:19092"})
 
     print(f"producing with {args.schema} (currency field: {has_currency})")
     for _ in range(10):

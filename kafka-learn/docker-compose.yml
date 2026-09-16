@@ -3,7 +3,10 @@ services:
     image: confluentinc/cp-kafka:7.7.1
     container_name: kafka
     ports:
-      - "9092:9092"
+      # host:container -- container-internal port stays 9092 (see KAFKA_LISTENERS below);
+      # published on 19092 on the HOST since 9092/29092 are common defaults other local
+      # Kafka setups grab too -- change the left-hand side here if 19092 is also taken
+      - "19092:9092"
     healthcheck:
       test: ["CMD", "kafka-broker-api-versions", "--bootstrap-server", "localhost:9092"]
       interval: 5s
@@ -12,7 +15,10 @@ services:
     environment:
       KAFKA_NODE_ID: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
-      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:9092"
+      # PLAINTEXT_HOST's advertised address MUST match the host-side port above (left-hand
+      # side of the ports: mapping) -- this is what the broker tells host clients to
+      # reconnect to, independent of which container-internal port it's forwarded from
+      KAFKA_ADVERTISED_LISTENERS: "PLAINTEXT://kafka:29092,PLAINTEXT_HOST://localhost:19092"
       KAFKA_LISTENERS: "PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:9092"
       KAFKA_PROCESS_ROLES: "broker,controller"
       KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:29093"

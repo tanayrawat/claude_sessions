@@ -29,13 +29,13 @@ def window_start(ts: float) -> int:
 def main():
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": "windowed-aggregator",
             "auto.offset.reset": "earliest",
         }
     )
     consumer.subscribe([INPUT_TOPIC])
-    producer = Producer({"bootstrap.servers": "localhost:9092"})
+    producer = Producer({"bootstrap.servers": "localhost:19092"})
 
     windows: dict[int, dict] = defaultdict(lambda: {"order_count": 0, "revenue": 0.0})
 

@@ -30,7 +30,7 @@ def main():
 
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": f"manual-commit-{args.commit}",
             "auto.offset.reset": "earliest",
             "enable.auto.commit": False,  # we decide exactly when an offset counts as "done"

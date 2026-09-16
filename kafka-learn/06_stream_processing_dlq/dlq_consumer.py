@@ -16,13 +16,13 @@ DLQ_TOPIC = "orders.dirty.dlq"
 def main():
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": "dlq-demo",
             "auto.offset.reset": "earliest",
         }
     )
     consumer.subscribe([INPUT_TOPIC])
-    dlq_producer = Producer({"bootstrap.servers": "localhost:9092"})
+    dlq_producer = Producer({"bootstrap.servers": "localhost:19092"})
 
     try:
         while True:

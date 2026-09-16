@@ -10,7 +10,7 @@ TOPIC = "revenue.v1"
 def main():
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": "revenue-readers",
             "auto.offset.reset": "earliest",
             "isolation.level": "read_committed",  # the default is read_uncommitted!

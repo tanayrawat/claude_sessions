@@ -29,7 +29,7 @@ def main():
 
     producer = Producer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "enable.idempotence": True,  # dedupes retries caused by broker-side timeouts/retries
             "acks": "all",  # required by, and implied by, enable.idempotence
         }

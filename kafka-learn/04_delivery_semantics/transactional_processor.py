@@ -26,7 +26,7 @@ OUTPUT_TOPIC = "revenue.v1"
 def main():
     producer = Producer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "transactional.id": "orders-to-revenue-1",
         }
     )
@@ -34,7 +34,7 @@ def main():
 
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": "orders-to-revenue",
             "enable.auto.commit": False,  # required: offsets travel inside the transaction instead
             "auto.offset.reset": "earliest",

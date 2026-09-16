@@ -20,7 +20,7 @@ def delivery_report(err, msg):
 
 
 def main():
-    producer = Producer({"bootstrap.servers": "localhost:9092"})
+    producer = Producer({"bootstrap.servers": "localhost:19092"})
     for _ in range(20):
         event = make_event()
         producer.produce(

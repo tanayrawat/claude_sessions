@@ -15,7 +15,7 @@ TOPIC = "orders.dirty"
 
 
 def main():
-    producer = Producer({"bootstrap.servers": "localhost:9092"})
+    producer = Producer({"bootstrap.servers": "localhost:19092"})
     print("producing (with occasional poison messages) -- Ctrl+C to stop")
     try:
         while True:

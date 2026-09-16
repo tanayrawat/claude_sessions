@@ -66,8 +66,12 @@ a transaction refuse to let that happen.
 
 ## Troubleshooting
 
-- **Port already in use** — something else on your machine is using 9092/8080/8081; stop it or
-  edit the port mappings in `docker-compose.yml`.
+- **Port already in use** — the broker publishes on host port **19092** (not the usual 9092)
+  specifically so it doesn't collide with another local Kafka you might already be running; if
+  19092, 8080, or 8081 are *also* taken, edit the port mappings in `docker-compose.yml`. If you
+  change 19092, remember `KAFKA_ADVERTISED_LISTENERS`' `PLAINTEXT_HOST` value has to match it
+  exactly (that's what tells host-side clients where to reconnect), and every script's
+  `bootstrap.servers` needs to match too.
 - **Connection refused right after `make up`** — the broker takes a few seconds to finish
   startup; `make up` waits for its healthcheck, but if you skipped straight to a script, just
   retry, or check `make logs`.

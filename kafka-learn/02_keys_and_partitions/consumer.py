@@ -9,7 +9,7 @@ TOPIC = "orders.keyed"
 def main():
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": "keyed-readers",
             "auto.offset.reset": "earliest",
         }

@@ -35,7 +35,7 @@ def main():
 
     consumer = Consumer(
         {
-            "bootstrap.servers": "localhost:9092",
+            "bootstrap.servers": "localhost:19092",
             "group.id": args.group,
             "client.id": args.name,
             "auto.offset.reset": "earliest",
