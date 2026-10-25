@@ -1,5 +1,7 @@
 # API Ingestion for Data Engineers — a production-shaped pipeline
 
+> **New to this?** Start with the [API course](../api-course/README.md). It teaches each idea in this project one lesson at a time, with demos that show every failure first. This README is the reference for the finished project (it's the capstone for lessons 3-10).
+
 Most data engineering work is not "write a Spark job"; it is **getting data out of someone else's API
 reliably, repeatedly and cheaply, and landing it somewhere analysts can trust**. This project does exactly that
 for the GitHub Issues REST API, with every concern a real ingestion job has — and a tiny test suite that proves each one.

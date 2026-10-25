@@ -1,5 +1,7 @@
 # Serving Data Over APIs + Receiving Webhooks (Part 2)
 
+> **New to this?** Start with the [API course](../api-course/README.md). Lessons 11 (webhooks) and 12 (serving) walk through this project's ideas step by step. This README is the in-depth reference for the finished project.
+
 [`../api-ingestion-learn`](../api-ingestion-learn) taught you to be an API **client**: pull data out of someone else's API.
 This project flips it. You become the **server**:
 
